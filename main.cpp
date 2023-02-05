@@ -3,37 +3,44 @@
 
 using namespace std;
 
-int bablo = 0;
-int sumOrder = 0; // —умма заказа
+
+
+// класс св€занный с оплатой 
+class Payment {
+public:
+static int* sumChocolateBars; // количество выбранных шоколадных батончиков
+int sumOrder = 0; // сумма заказа
+int payment; // (оплата) сколько внес денег покупатель
+
+	// метод подсчета суммы заказа
+	virtual int summ() {
+	};
+
+	// метод который провер€ет сколько денег у покупател€ и возврат сдачи
+	virtual int pay(int colory) {
+		if (payment < sumOrder) {
+			cout << "Ќе достаточно денежных средств ";
+		}
+	}
+	~Payment();
+};
 
 class Snack {
 private:
-	
+	char name; // название товара
 	int price; // цена товара
 	int colories; // сколько каллорий в шоколаде
-	
+	int availability; // наличие товара в терминале
 public:
 
 	int choice; // выбор или Ѕаунти или —никерс
-	int payment; // сколько внес денег покупатель
-
-	// —оздаем метод который будет добавл€ть количество —неков
-	virtual int addSnack(int choice) {
-
-	}
-	// ћетод подсчета суммы заказа
-	virtual int summ() {
-
 	
-	};
-
-
-	// ћетод который провер€ет сколько денег у покупател€ и возврат сдачи
-	virtual int pay(int colory) {
-		if (bablo < sumOrder) {
-			cout << "„увак накопи бабус€тушек или ";
-		}
+	Snack(const char* name, int* sumChocolateBars);
+	// создаем метод который будет добавл€ть количество —неков
+	virtual int addSnack(int choice) {
+		cout << sumChocolateBars << endl;
 	}
+	~Snack();
 };
 
 
@@ -41,5 +48,10 @@ public:
 int main() {
 	setlocale(LC_ALL, "rus");
 	
-	
+	cout << "¬ыберите Snack: Bounty, Snickers или Picknic" << endl;
+	cout << "Bounty - 1" << endl;
+	cout << "Snickers - 2" << endl;
+	cout << "Picknic - 3" << endl;
+	cout << "Ќичего не выбрали (отмена операции) - 4" << endl;
+
 }
