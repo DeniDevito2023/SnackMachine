@@ -74,6 +74,6 @@ int main() {
 		cout << "¬ведено не верное значение";
 
 	}
-	
+	//Obnova 3
 	delete m;
 }
