@@ -15,6 +15,13 @@ public:
 	int price; // цена товара
 	int colories; // сколько каллорий в шоколаде
 	int availability = 20; // наличие товара в терминале (определим что их каждого товара по 20 штук)
+public:
+	Snack(string n, int p, int c, int a) {
+		name = n;
+		price = p;
+		colories = c;
+		availability = a;
+	};
 	
 	// создаем метод который будет добавлять количество Снеков
 	virtual int addSnack(int choice) {
@@ -23,16 +30,31 @@ public:
 	};
 };
 
-//class Bounty : public Snack {
-//	Bounty(const string name, int price, int colories, int availability);
-//	
-//
-//};
-//
-//class Snickers : public Snack {
-//	Snickers(const string name, int price, int colories, int availability);
-//
-//};
+class Bounty : public Snack {
+public:
+	Bounty(const string n, int p, int c, int a, string o) : Snack(n, p, c, a) {
+	
+		additivis = o; // довабки в шоколаде (в данном случае орех)
+	};
+private:
+	string additivis;
+};
+
+class Snickers : public Snack {
+public:
+	Snickers(const string n, int p, int c, int a) : Snack(n, p, c, a) {
+
+
+	};
+};
+
+class Picknic : public Snack {
+public:
+	Picknic(const string n, int p, int c, int a) : Snack(n, p, c, a) {
+
+
+	};
+};
 
 
 // класс связанный с оплатой 
@@ -41,22 +63,13 @@ public:
 
 	int sumOrder = 0; // сумма заказа
 	int batton = 100; // цена батона
-	int change = 0;
+	int change = 0; // сдача после покупки
+
 	 // метод подсчета суммы заказа
 	void summ(int batton, int sumChocolateBars) {
-		if (batton == 1) {
 			sumOrder = batton * sumChocolateBars;
 			cout << "Необходимо внести сумму: " << sumOrder;
-		}
-		if (batton == 2) {
-		sumOrder = batton * sumChocolateBars;
-		cout << "Необходимо внести сумму: " << sumOrder;
-		}
-		if (batton == 3) {
-			sumOrder = batton * sumChocolateBars;
-			cout << "Необходимо внести сумму: " << sumOrder;
-		}
-		
+
 	};
 
 	// метод который проверяет сколько денег у покупателя и возврат сдачи
@@ -73,35 +86,26 @@ public:
 	
 };
 
-
 	// создаем функцию - интерфейс для покупателя
 	// передаем ей объект с номером выбранного батончика
-	void PayPal(int i, Payment *m) {
-		cout << "Сколько батончиков будете брать? " << endl;
-		cin >> sumChocolateBars;
-		m->summ(i, sumChocolateBars);
+void PayPal(int i, Payment* m) {
+	cout << "Сколько батончиков будете брать? " << endl;
+	cin >> sumChocolateBars;
+	m->summ(i, sumChocolateBars);
 
-		cout << endl << "Внесенная сумма: " << endl;
-		cin >> payment;
-		m->pay(payment);
-}
+	cout << endl << "Внесенная сумма: " << endl;
+	cin >> payment;
+	m->pay(payment);
+};
 
 int main() {
 	setlocale(LC_ALL, "rus");
-	Snack* X = new Snack;
-	Snack* Y = new Snack;
 	
-	X->name = "Bounty";
-	X->price = 120;
-	X->colories = 400;
-	X->availability = 25;
-
+	// присваиваем данные объектам 
+	Bounty Boun("Bounty", 120, 400, 25, "nut");
+	Snickers Snick("Snickers", 100, 460, 20);
+	Picknic Pick("Picknic", 70, 356, 13);
 	
-	Y->name = "Snickers";
-	Y->price = 100;
-	Y->colories = 460;
-	Y->availability = 20;
-
 	// запрос данных у покупателя
 	cout << "Выберите Snack: Bounty, Snickers или Picknic" << endl;
 	cout << "Bounty - 1" << endl;
@@ -116,13 +120,13 @@ int main() {
 	Payment *m = new Payment;
 	switch (choice) {
 	case 1:
-		PayPal(choice, m);
+		PayPal(Boun.price, m);
 		break;
 	case 2:
-		PayPal(choice, m);
+		PayPal(Snick.price, m);
 		break;
 	case 3:
-		PayPal(choice, m);
+		PayPal(Pick.price, m);
 		break;
 	case 4: break;
 	default:
@@ -130,7 +134,5 @@ int main() {
 
 	}
 	
-	
-		
 	delete m;
 }
